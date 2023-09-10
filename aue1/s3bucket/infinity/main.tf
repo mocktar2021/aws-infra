@@ -11,3 +11,11 @@ resource "aws_s3_bucket" "example_bucket" {
     # Project = "Infinity"
   }
 }
+
+terraform {
+  backend "s3" {
+    bucket = "mocktarltd-terraform-state-bucket"
+    key    = "terraform.tfstate"
+    region = "us-east-1"  # Replace with your desired AWS region
+  }
+}
