@@ -15,23 +15,24 @@ pipeline {
         stage('Deploy Infra') {
             steps {
                 script {
-                   def workspace = pwd()  // Get the current workspace directory
-            echo "Current workspace: ${workspace}"
+                    def workspace = pwd()  // Get the current workspace directory
+                    echo "Current workspace: ${workspace}"
 
-            // Change to the directory where Terraform configuration files are located
-            dir("${workspace}/aue1/s3bucket/infinity") {
-                // Check for changes in .tf files
-                def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
-                    
-                    if (changes == 0) {
-                        echo 'No .tf files changed. Skipping deployment.'
-                    } else {
-                        // Your deployment steps here
-                        echo 'Changes detected in .tf files. Deploying...'
+                    // Change to the directory where Terraform configuration files are located
+                    dir("${workspace}/aue1/s3bucket/infinity") {
+                        // Check for changes in .tf files
+                        def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                         
-                        // Deploy resources based on Terraform configurations
-                        bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
-                        bat 'terraform apply -auto-approve'
+                        if (changes == 0) {
+                            echo 'No .tf files changed. Skipping deployment.'
+                        } else {
+                            // Your deployment steps here
+                            echo 'Changes detected in .tf files. Deploying...'
+                            
+                            // Deploy resources based on Terraform configurations
+                            bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
+                            bat 'terraform apply -auto-approve'
+                        }
                     }
                 }
             }
