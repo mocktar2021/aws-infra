@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Check for changes in .tf files
-                    def changes = sh(script: 'git diff --name-only origin/master...HEAD | grep \\.tf$', returnStatus: true)
+                    def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                     
                     if (changes == 0) {
                         echo 'No .tf files changed. Skipping deployment.'
@@ -25,8 +25,8 @@ pipeline {
                         echo 'Changes detected in .tf files. Deploying...'
                         
                         // Deploy resources based on Terraform configurations
-                        sh 'terraform init -backend-config="bucket=${TF_BACKEND_BUCKET}"'
-                        sh 'terraform apply -auto-approve'
+                        bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
+                        bat 'terraform apply -auto-approve'
                     }
                 }
             }
