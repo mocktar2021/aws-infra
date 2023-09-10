@@ -9,11 +9,11 @@ variable "bucket_name" {
   type        = string
   default     = "mocktarltd-aue1-infinity"
 
-#   validation {
-#     condition = length(var.bucket_name) > 2 && length(var.bucket_name) < 64 && can(regex("^[0-9A-Za-z-]+$", var.bucket_name))
-#     error_message = "The bucket_name must follow naming rules. Check them out at: https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html."
-#   }
-# }
+  validation {
+    condition = length(var.bucket_name) > 2 && length(var.bucket_name) < 64 && can(regex("^[0-9A-Za-z-]+$", var.bucket_name))
+    error_message = "The bucket_name must follow naming rules. Check them out at: https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html."
+  }
+}
 
 # variable "access_logging_bucket_name" {
 #   description = "S3 bucket name for access logging storage"
