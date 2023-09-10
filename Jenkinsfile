@@ -15,8 +15,13 @@ pipeline {
         stage('Deploy Infra') {
             steps {
                 script {
-                    // Check for changes in .tf files
-                    def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
+                   def workspace = pwd()  // Get the current workspace directory
+            echo "Current workspace: ${workspace}"
+
+            // Change to the directory where Terraform configuration files are located
+            dir("${workspace}/aue1/s3bucket/infinity") {
+                // Check for changes in .tf files
+                def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                     
                     if (changes == 0) {
                         echo 'No .tf files changed. Skipping deployment.'
