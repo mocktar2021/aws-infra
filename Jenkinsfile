@@ -19,7 +19,7 @@ pipeline {
                     echo "Current workspace: ${workspace}"
 
                     // Change to the directory where Terraform configuration files are located
-                    dir("${workspace}/aue1/s3bucket/infinity") {
+                    dir("${workspace}/aue1/s3bucket/lowes") {
                         // Check for changes in .tf files
                         def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                         
