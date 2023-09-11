@@ -31,6 +31,7 @@ pipeline {
                             
                             // Deploy resources based on Terraform configurations
                             bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
+                            bat 'terraform init -migrate-state'
                             bat 'terraform apply -auto-approve'
                         }
                     }
