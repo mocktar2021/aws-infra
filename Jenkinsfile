@@ -21,7 +21,7 @@ pipeline {
                     // Change to the directory where Terraform configuration files are located
                     dir("${workspace}/global/iam_user/list1") {
                         // Check for changes in .tf files
-                        def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
+                        def changes = sh(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                         
                         if (changes == 0) {
                             echo 'No .tf files changed. Skipping deployment.'
