@@ -19,7 +19,7 @@ pipeline {
                     echo "Current workspace: ${workspace}"
 
                     // Change to the directory where Terraform configuration files are located
-                    dir("${workspace}/aue1/s3bucket/lowes") {
+                    dir("${workspace}/global/iam_user/list1") {
                         // Check for changes in .tf files
                         def changes = bat(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                         
@@ -31,7 +31,6 @@ pipeline {
                             
                             // Deploy resources based on Terraform configurations
                             bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
-                            bat 'terraform init -migrate-state'
                             bat 'terraform apply -auto-approve'
                         }
                     }
