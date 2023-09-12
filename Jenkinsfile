@@ -31,7 +31,7 @@ pipeline {
                             
                             // Deploy resources based on Terraform configurations
                             sh 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
-                            sh 'terraform destroy -auto-approve'
+                            sh 'terraform apply -auto-approve'
                         }
                     }
                 }
