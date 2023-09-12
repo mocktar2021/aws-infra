@@ -30,8 +30,8 @@ pipeline {
                             echo 'Changes detected in .tf files. Deploying...'
                             
                             // Deploy resources based on Terraform configurations
-                            bat 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
-                            bat 'terraform apply -auto-approve'
+                            sh 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
+                            sh 'terraform apply -auto-approve'
                         }
                     }
                 }
