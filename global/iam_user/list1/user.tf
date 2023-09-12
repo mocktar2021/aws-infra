@@ -1,4 +1,8 @@
 # Define the IAM User
+provider "aws" {
+  region = "us-east-1"  # Replace with your desired AWS region
+}
+
 resource "aws_iam_user" "ashley_gross" {
   name = "ashley.gross@mocktar.com"
 }
