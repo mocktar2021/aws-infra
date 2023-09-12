@@ -7,6 +7,7 @@ resource "aws_iam_user" "ashley_gross" {
   name = "ashley.gross@mocktar.com"
 }
 
+
 # Create an IAM Access Key for the User
 # resource "aws_iam_access_key" "karl_noble_access_key" {
 #   user = aws_iam_user.karl_noble.name
