@@ -29,7 +29,7 @@ pipeline {
                             
                             // Deploy resources based on Terraform configurations
                             sh "terraform init -backend-config=bucket=${TF_BACKEND_BUCKET}"
-                            sh 'terraform apply -auto-approve'
+                            sh 'terraform destroy -auto-approve'
                         // } else {
                             echo 'No .tf files changed. Skipping deployment.'
                         // }
