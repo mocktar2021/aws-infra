@@ -21,11 +21,11 @@ pipeline {
                     // Change to the directory where Terraform configuration files are located
                     dir("${workspace}aue1/ola_s3buket") {
                         // Check for changes in .tf files
-                        def changes = sh(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
+                        // def changes = sh(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
                         
-                        if (changes == 0) {
+                        // if (changes == 0) {
                             echo 'No .tf files changed. Skipping deployment.'
-                        } else {
+                        // } else {
                             // Your deployment steps here
                             echo 'Changes detected in .tf files. Deploying...'
                             
