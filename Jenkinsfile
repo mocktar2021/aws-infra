@@ -19,20 +19,20 @@ pipeline {
                     echo "Current workspace: ${workspace}"
 
                     // Change to the directory where Terraform configuration files are located
-                    dir("${workspace}aue1/ola_s3buket") {
+                    dir("${workspace}/aue1/ola_s3buket") {
                         // Check for changes in .tf files
-                        // def changes = sh(script: 'git diff --name-only origin/master...HEAD | findstr \\.tf$', returnStatus: true)
+                        // def changes = sh(script: 'git diff --name-only origin/master...HEAD | grep \\.tf$', returnStatus: true)
                         
-                        // if (changes == 0) {
-                            echo 'No .tf files changed. Skipping deployment.'
-                        // } else {
-                            // Your deployment steps here
+                        // if (changes != 0) 
+                        // {
                             echo 'Changes detected in .tf files. Deploying...'
                             
                             // Deploy resources based on Terraform configurations
-                            sh 'terraform init -backend-config="bucket=%TF_BACKEND_BUCKET%"'
+                            sh "terraform init -backend-config=bucket=${TF_BACKEND_BUCKET}"
                             sh 'terraform apply -auto-approve'
-                        }
+                        // } else {
+                            echo 'No .tf files changed. Skipping deployment.'
+                        // }
                     }
                 }
             }
