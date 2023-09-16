@@ -1,1 +1,1 @@
-s3_bucket_name         = "my-unique-bucket-name"
+s3_bucket_name         = "mocktarltd-ola-test"
