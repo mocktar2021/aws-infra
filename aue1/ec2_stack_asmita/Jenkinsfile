@@ -38,20 +38,20 @@ pipeline {
             }
         }
 
-    //     stage('Terraform Destroy (Cleanup)') {
-    //         when {
-    //             expression {
-    //                 currentBuild.resultIsBetterOrEqualTo('FAILURE')
-    //             }
-    //         }
-    //         steps {
-    //             script {
-    //                 // Destroy infrastructure in case of failure
-    //                 sh 'terraform destroy -auto-approve'
-    //             }
-    //         }
-    //     }
-    // }
+        // stage('Terraform Destroy (Cleanup)') {
+        //     when {
+        //         expression {
+        //             currentBuild.resultIsBetterOrEqualTo('FAILURE')
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             // Destroy infrastructure in case of failure
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
+    }
 
     post {
         failure {
