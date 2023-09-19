@@ -51,13 +51,13 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
-            failure {
-                emailext subject: 'Infrastructure Deployment Failed',
-                body: 'The infrastructure deployment pipeline has failed. Please investigate.',
-                to: 'tairou.mocktar@gmail.com'
-            }
+    post {
+        failure {
+            emailext subject: 'Infrastructure Deployment Failed',
+            body: 'The infrastructure deployment pipeline has failed. Please investigate.',
+            to: 'tairou.mocktar@gmail.com'
         }
     }
 }
