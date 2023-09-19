@@ -20,6 +20,7 @@ resource "aws_subnet" "asmita_subnet" {
 resource "aws_security_group" "asmita_security_group" {
   name        = "asmita-security-group"
   description = "asmita security group for web servers"
+  vpc_id      = aws_vpc.asmita_vpc.id
   
   # Define inbound rules to allow incoming traffic
   # Rule 1: HTTP (Port 80)
