@@ -44,7 +44,7 @@ resource "aws_security_group" "asmita_security_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["24.162.252.32/32"] # Replace with your public IP
+    cidr_blocks = ["0.0.0.0/32"] # Replace with your public IP
   }
   
   # Rule 4: Custom Rules (Add more as needed)
