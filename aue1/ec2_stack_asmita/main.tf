@@ -72,7 +72,7 @@ resource "aws_instance" "asmita_instance" {
   instance_type = "t2.micro"           # Replace with your desired instance type
   subnet_id     = aws_subnet.asmita_subnet.id
   key_name      = "vprofile-bean-key" # Replace with your SSH key pair name
-  security_groups = [aws_security_group.asmita_security_group]
+  security_groups = [aws_security_group.asmita_security_group.id]
   
   # Define user data to install Apache or any other web server and deploy your app
   user_data = <<-EOF
