@@ -1,4 +1,4 @@
-//This Terraform Template creates a asmita Server using JDK 11 on EC2 Instance.
+//This Terraform Template creates a phone Server using JDK 11 on EC2 Instance.
 //Jenkins Server is enabled with Git, Docker and Docker Compose,
 //AWS CLI Version 2, Python 3, Ansible, Terraform and Boto3.
 //Jenkins Server will run on Amazon Linux 2 EC2 Instance with
@@ -11,28 +11,28 @@ provider "aws" {
   //  If you have entered your credentials in AWS CLI before, you do not need to use these arguments.
 }
 
-resource "aws_instance" "tf-asmita-server" {
+resource "aws_instance" "tf-phone-server" {
   ami           = var.ami
   instance_type = var.instance_type
   key_name      = var.mykey
-  vpc_security_group_ids = [aws_security_group.tf-asmita-sec-gr.id]
-  iam_instance_profile = aws_iam_instance_profile.tf-asmita-server-profile.name
+  vpc_security_group_ids = [aws_security_group.tf-phone-sec-gr.id]
+  iam_instance_profile = aws_iam_instance_profile.tf-phone-server-profile.name
   ebs_block_device {
     device_name = "/dev/xvda"
     volume_type = "gp2"
     volume_size = 16
   }
   tags = {
-    Name = var.asmita-server-tag
-    server = "asmita"
+    Name = var.phone-server-tag
+    server = "phone"
   }
   user_data = file("ec2data.sh")
 }
 
-resource "aws_security_group" "tf-asmita-sec-gr" {
-  name = var.asmita_server_secgr
+resource "aws_security_group" "tf-phone-sec-gr" {
+  name = var.phone_server_secgr
   tags = {
-    Name = var.asmita_server_secgr
+    Name = var.phone_server_secgr
   }
   ingress {
     from_port   = 80
@@ -63,8 +63,8 @@ resource "aws_security_group" "tf-asmita-sec-gr" {
   }
 }
 
-resource "aws_iam_role" "tf-asmita-server-role" {
-  name               = var.asmita-role
+resource "aws_iam_role" "tf-phone-server-role" {
+  name               = var.phone-role
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -84,15 +84,15 @@ EOF
   managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess", "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess", "arn:aws:iam::aws:policy/AdministratorAccess"]
 }
 
-resource "aws_iam_instance_profile" "tf-asmita-server-profile" {
-  name = var.asmita-profile
-  role = aws_iam_role.tf-asmita-server-role.name
+resource "aws_iam_instance_profile" "tf-phone-server-profile" {
+  name = var.phone-profile
+  role = aws_iam_role.tf-phone-server-role.name
 }
 
-output "asmita" {
-  value = aws_instance.tf-asmita-server.public_dns
+output "phone" {
+  value = aws_instance.tf-phone-server.public_dns
 }
 
-output "asmitaURL" {
-  value = "http://${aws_instance.tf-asmita-server.public_dns}:80"
+output "phoneURL" {
+  value = "http://${aws_instance.tf-phone-server.public_dns}:80"
 }
