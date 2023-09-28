@@ -6,7 +6,7 @@ provider "aws" {
 # Create an S3 bucket for your static website
 resource "aws_s3_bucket" "website_bucket" {
   bucket = "mocktarltd-aue1-asmita2"  # Change this to a unique name
-  acl    = "private"      # Allow public read access for static website files
+  acl    = "public-read"      # Allow public read access for static website files
 
   website {
     index_document = "index.html"  # The default index file
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "website_bucket" {
 # Create a CloudFront distribution for your website
 resource "aws_cloudfront_distribution" "website_cdn" {
   origin {
-    domain_name = aws_s3_bucket.website_bucket.s3.amazonaws.com
+    domain_name = aws_s3_bucket.website_bucket.website_endpoint
     origin_id   = "S3Origin"
   }
 
