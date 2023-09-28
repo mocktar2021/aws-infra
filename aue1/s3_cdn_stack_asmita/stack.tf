@@ -6,7 +6,7 @@ provider "aws" {
 # Create an S3 bucket for your static website
 resource "aws_s3_bucket" "website_bucket" {
   bucket = "mocktarltd-aue1-asmita2"  # Change this to a unique name
-  acl    = "public-read"      # Allow public read access for static website files
+  acl    = "private"      # Allow public read access for static website files
 
   website {
     index_document = "index.html"  # The default index file
