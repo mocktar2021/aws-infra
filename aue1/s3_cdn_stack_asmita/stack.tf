@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "website_cdn" {
   origin {
     domain_name = "${aws_s3_bucket.website_bucket.bucket}.s3.amazonaws.com"
     origin_id   = "S3Origin"
-  }
+}
 
   enabled             = true
   is_ipv6_enabled     = true
