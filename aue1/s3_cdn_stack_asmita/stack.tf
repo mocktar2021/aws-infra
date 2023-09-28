@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "website_bucket" {
 # Create a CloudFront distribution for your website
 resource "aws_cloudfront_distribution" "website_cdn" {
   origin {
-    domain_name = aws_s3_bucket.website_bucket.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.website_bucket.s3.amazonaws.com
     origin_id   = "S3Origin"
   }
 
