@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('jenkins-user')
+        AWS_SECRET_ACCESS_KEY = credentials('jenkins-user')
+        TF_BACKEND_BUCKET     = 'mocktarltd-terraform-state-bucket'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the code from GitHub
+                checkout scm
+            }
+        }
+        stage('Deploy Infra') {
+            steps {
+                script {
+                    def workspace = pwd()  // Get the current workspace directory
+                    echo "Current workspace: ${workspace}"
+
+                    // Change to the directory where Terraform configuration files are located
+                    dir("${workspace}/aue1/s3_cdn_stack_asmita") {
+                        // Check for changes in .tf files
+                        // def changes = sh(script: 'git diff --name-only origin/master...HEAD | grep \\.tf$', returnStatus: true)
+                        
+                        // if (changes != 0) 
+                        // {
+                            echo 'Changes detected in .tf files. Deploying...'
+                            
+                            // Deploy resources based on Terraform configurations
+                            sh "terraform init -backend-config=bucket=${TF_BACKEND_BUCKET}"
+                            sh 'terraform apply -auto-approve'
+                        // } else {
+                            // echo 'No .tf files changed. Skipping deployment.'
+                        // }
+                    }
+                }
+            }
+        }
+
+        // stage('Terraform Destroy (Cleanup)') {
+        //     when {
+        //         expression {
+        //             currentBuild.resultIsBetterOrEqualTo('FAILURE')
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             // Destroy infrastructure in case of failure
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
+    }
+
+    post {
+        failure {
+            emailext subject: 'Infrastructure Deployment Failed',
+            body: 'The infrastructure deployment pipeline has failed. Please investigate.',
+            to: 'tairou.mocktar@gmail.com'
+        }
+    }
+}
